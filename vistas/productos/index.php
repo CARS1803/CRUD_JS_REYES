@@ -21,6 +21,11 @@
                     <div class="col">
                         <button type="submit" class="btn btn-primary w-100">Guardar</button>
                     </div>
+
+                    <div class="col">
+                        <button type="button" class="btn btn-info w-100">Buscar</button>
+                        </div>
+                    </div>
                 </div>
             </form> 
         </div>
