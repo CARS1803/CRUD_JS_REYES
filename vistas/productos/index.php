@@ -4,6 +4,7 @@
         <h1 class="text-center">Formulario de productos</h1>
         <div class="row justify-content-center">
             <form class="col-lg-8 border bg-light p-3">
+            <input type="hidden" name="producto_id" id="producto_id">
                 <div class="row mb-3">
                     <div class="col">
                         <label for="producto_nombre">Nombre del producto</label>
