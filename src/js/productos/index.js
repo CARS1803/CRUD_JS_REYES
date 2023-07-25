@@ -1,6 +1,12 @@
 const formulario = document.querySelector('form')
 const tablaProductos = document.getElementById('tablaProductos');
 const btnBuscar = document.getElementById('btnBuscar');
+const btnModificar = document.getElementById('btnModificar')
+const btnGuardar = document.getElementById('btnGuardar')
+const divTabla = document.getElementById('divTabla')
+
+btnModificar.disabled = true
+btnModificar.parentElement.style.display = 'none'
 
 const guardar = async (evento) => {
     evento.preventDefault();
@@ -28,6 +34,7 @@ const guardar = async (evento) => {
         switch (codigo) {
             case 1:
                 formulario.reset();
+                buscar();
                 
                 break;
 
@@ -128,6 +135,14 @@ const colocarDatos = (datos) => {
     formulario.producto_nombre.value = datos.PRODUCTO_NOMBRE
     formulario.producto_precio.value = datos.PRODUCTO_PRECIO
     formulario.producto_id.value = datos.PRODUCTO_ID
+
+    btnGuardar.disabled = true
+    btnGuardar.parentElement.style.display = 'none'
+    btnBuscar.disabled = true
+    btnBuscar.parentElement.style.display = 'none'
+    btnModificar.disabled = false
+    btnModificar.parentElement.style.display = ''
+    divTabla.style.display = 'none'
 }
 
 buscar();

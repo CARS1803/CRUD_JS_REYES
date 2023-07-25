@@ -3,6 +3,8 @@
 // !Este es mi codigo para clientes.
 
 const formulario = document.querySelector('form')
+const btnBuscar = document.getElementById('btnBuscar')
+const tablaClientes = document.getElementById('tablaClientes');
 
 const guardar = async (evento) => {
     evento.preventDefault();
@@ -50,6 +52,96 @@ const guardar = async (evento) => {
     }
 }
 
-formulario.addEventListener('submit', guardar)
 
+
+
+
+
+
+
+const buscar = async () => {
+    let cliente_nombre = formulario.cliente_nombre.value;
+    let cliente_nit = formulario.cliente_nit.value;
+    const url =`/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php?cliente_nombre=${cliente_nombre}&cliente_nit=${cliente_nit}`;
+    const config = {
+        method : 'GET',
+    }
+
+    try{
+        const respuesta = await fetch(url,config)
+        const data = await respuesta.json();
+
+        console.log(tablaClientes.tBodies[0].innerHTML = '');
+
+        //!Para crear tablas de forma automatica.
+        const fragment=document.createDocumentFragment();
+
+        if(data.length > 0){
+            let contador = 1;
+            data.forEach(cliente => {
+                const tr = document.createElement('tr');
+                const td1 = document.createElement('td');
+                const td2 = document.createElement('td');
+                const td3 = document.createElement('td');
+                const td4 = document.createElement('td');
+                const td5 = document.createElement('td');
+                const buttonModificar = document.createElement('button');
+                const buttonEliminar = document.createElement('button');
+
+                buttonModificar.classList.add('btn', 'btn-warning');
+                buttonEliminar.classList.add('btn', 'btn-danger');
+                buttonModificar.textContent = 'Modificar';
+                buttonEliminar.textContent = 'Eliminar';
+
+                buttonModificar.addEventListener('click', () =>  colocarDatos(cliente))
+
+                td1.innerText = contador;
+                td2.innerText = cliente.CLIENTE_NOMBRE
+                td3.innerText = cliente.CLIENTE_NIT
+                
+                td4.appendChild(buttonModificar);
+                td5.appendChild(buttonEliminar);
+                tr.appendChild(td1)
+                tr.appendChild(td2)
+                tr.appendChild(td3)
+                tr.appendChild(td4)
+                tr.appendChild(td5)
+
+                fragment.appendChild(tr);
+                contador++;
+
+            })
+        }else{
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.innerText = 'No existe Registros';
+            td.colSpan = 5
+            tr.appendChild(td)
+            fragment.appendChild(tr);
+
+        };
+
+        tablaClientes.tBodies[0].appendChild(fragment)
+
+    }catch (error){
+        console.log(error)
+    }
+}
+
+
+
+const colocarDatos = (datos) => {
+    formulario.cliente_nombre.value = datos.CLIENTE_NOMBRE
+    formulario.cliente_nit.value = datos.CLIENTE_NIT
+    formulario.cliente_id.value = datos.CLIENTE_ID
+
+
+}
+
+
+
+
+buscar();
+formulario.addEventListener('submit', guardar)
+btnBuscar.addEventListener('click', buscar)
 

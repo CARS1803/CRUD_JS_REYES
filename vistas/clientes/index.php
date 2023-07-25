@@ -27,6 +27,20 @@
                 </div>
             </form>
         </div>
+        <table class="table table-bordered table-hover" id="tablaClientes">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>NO. </th>
+                            <th>NOMBRE</th>
+                            <th>NIT</th>
+                            <th>MODIFICAR</th>
+                            <th>ELIMINAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
+                    </div>
     </div>
     <script src="../../src/js/funciones.js"></script>
     <script src="../../src/js/clientes/index.js"></script>
