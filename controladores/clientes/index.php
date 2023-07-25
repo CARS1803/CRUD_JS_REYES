@@ -1,5 +1,5 @@
 <?php
-require '../../modelos/Producto.php';
+require '../../modelos/Cliente.php';
 $metodo = $_SERVER['REQUEST_METHOD'];
 $tipo = $_POST['tipo'];
 
@@ -10,20 +10,20 @@ try {
     
     switch ($metodo) {
         case 'POST':
-            $producto = new Producto($_POST);
+            $cliente = new Cliente($_POST);
 
             if($tipo == 1){
-                $resultado = $producto->guardar();
+                $resultado = $cliente->guardar();
                 $mensaje = "Se guardó correctamente";
             }
 
             if($tipo == 2){
-                $resultado = $producto->guardar();
+                $resultado = $cliente->guardar();
                 $mensaje = "Se modifico correctamente";
             }
 
             if($tipo == 3){
-                $resultado = $producto->guardar();
+                $resultado = $cliente->guardar();
                 $mensaje = "Se elimino correctamente";
             }
 
@@ -41,10 +41,10 @@ try {
 
             break;
         case 'GET':
-            $producto = new Producto($_GET);
-            $productos = $producto->buscar();
-
-            echo json_encode($productos);
+            $cliente = new Cliente($_GET);
+            $clientes = $cliente->buscar();
+            echo json_encode($clientes);
+            
             break;
         
         default:
