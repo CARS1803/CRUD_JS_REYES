@@ -9,9 +9,12 @@ const btnGuardar = document.getElementById('btnGuardar');
 const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const divTabla = document.getElementById('divTabla');
+const btnLimpiar = document.getElementById('btnLimpiar');
 
 btnModificar.disabled = true
 btnModificar.parentElement.style.display = 'none'
+btnCancelar.disabled = true
+btnCancelar.parentElement.style.display = 'none'
 
 const guardar = async (evento) => {
     evento.preventDefault();
@@ -30,8 +33,8 @@ const guardar = async (evento) => {
         body
     }
 
-    try{
-        const respuesta = await fetch(url,config)
+    try {
+        const respuesta = await fetch(url,config);
         const data = await respuesta.json();
 
         const {codigo, mensaje, detalle} = data;
@@ -39,25 +42,23 @@ const guardar = async (evento) => {
         switch (codigo) {
             case 1:
                 formulario.reset();
-                
+                buscar();
                 break;
 
-        case 0:
+            case 0:
                 console.log(detalle);
-                
                 break;
+
             default:
                 break;
         }
-
-    alert(mensaje);
-
-
-        console.log(data);
-    }catch (error){
-        console.log(error)
+    } catch (error) {
+        console.log(error);
     }
-}
+
+};
+
+
 
 
 
@@ -148,15 +149,102 @@ const colocarDatos = (datos) => {
     btnBuscar.parentElement.style.display = 'none'
     btnModificar.disabled = false
     btnModificar.parentElement.style.display = ''
+    btnCancelar.disabled = false
+    btnCancelar.parentElement.style.display = ''
     divTabla.style.display = 'none'
-
 
 }
 
+const cancelarAccion = (datos) => {
+    btnGuardar.disabled = false
+    btnGuardar.parentElement.style.display = ''
+    btnBuscar.disabled = false
+    btnBuscar.parentElement.style.display = ''
+    btnModificar.disabled = true
+    btnModificar.parentElement.style.display = 'none'
+    btnCancelar.disabled = true
+    btnCancelar.parentElement.style.display = 'none'
+    divTabla.style.display = ''
+}
 
+const modificar = async (e) => {
+    e.preventDefault();
+
+    if (validarFormulario(formulario)) {
+        const formData = new FormData(formulario);
+        formData.append('tipo', 2);
+        const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
+        const config = {
+            method: 'POST',
+            body: formData,
+        };
+
+        try {
+            const respuesta = await fetch(url, config);
+            const data = await respuesta.json();
+
+            const { codigo, mensaje, detalle } = data;
+            alert(mensaje);
+
+            switch (codigo) {
+                case 1:
+                    formulario.reset();
+                    buscar();
+                    cancelarAccion();
+
+                    break;
+                case 0:
+                    console.log(detalle);
+                    break;
+                default:
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        alert('Debe llenar todos los datos');
+        return;
+    }
+};
+
+const eliminar = async (id) => {
+    if (confirm('¿Está seguro que desea eliminarlo?')) {
+        const formData = new FormData();
+        formData.append('tipo', 3);
+        formData.append('cliente_id', id);
+        const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
+        const config = {
+            method: 'POST',
+            body: formData,
+        };
+
+        try {
+            const respuesta = await fetch(url, config);
+            const data = await respuesta.json();
+
+            const { codigo, mensaje, detalle } = data;
+            alert(mensaje);
+
+            switch (codigo) {
+                case 1:
+                    buscar();
+                    break;
+                case 0:
+                    console.log(detalle);
+                    break;
+                default:
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+};
 
 
 buscar();
 formulario.addEventListener('submit', guardar)
 btnBuscar.addEventListener('click', buscar)
-
+btnCancelar.addEventListener('click', cancelarAccion)
+btnModificar.addEventListener('click', modificar)

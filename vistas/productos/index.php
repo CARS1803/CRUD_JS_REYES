@@ -27,7 +27,12 @@
 
                     <div class="col">
                         <button type="button" id='btnBuscar' class="btn btn-info w-100">Buscar</button>
-                        </div>
+                    </div>
+
+                    <div class="col">
+                        <button type="button" id='btnCancelar' class="btn btn-danger w-100">Cancelar</button>
+                    </div>
+
                     </div>
                 </div>
             </form> 

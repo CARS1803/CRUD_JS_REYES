@@ -3,10 +3,13 @@ const tablaProductos = document.getElementById('tablaProductos');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificar = document.getElementById('btnModificar')
 const btnGuardar = document.getElementById('btnGuardar')
+const btnCancelar = document.getElementById('btnCancelar')
 const divTabla = document.getElementById('divTabla')
 
 btnModificar.disabled = true
 btnModificar.parentElement.style.display = 'none'
+btnCancelar.disabled = true
+btnCancelar.parentElement.style.display = 'none'
 
 const guardar = async (evento) => {
     evento.preventDefault();
@@ -95,6 +98,7 @@ const buscar =  async () => {
                 buttonEliminar.textContent = 'Eliminar';
 
                 buttonModificar.addEventListener('click', () =>  colocarDatos(producto))
+                buttonEliminar.addEventListener('click', () =>  eliminar(producto.PRODUCTO_ID))
 
                 td1.innerText = contador;
                 td2.innerText = producto.PRODUCTO_NOMBRE
@@ -142,12 +146,31 @@ const colocarDatos = (datos) => {
     btnBuscar.parentElement.style.display = 'none'
     btnModificar.disabled = false
     btnModificar.parentElement.style.display = ''
+    btnCancelar.disabled = false
+    btnCancelar.parentElement.style.display = ''
     divTabla.style.display = 'none'
+}
+
+const cancelarAccion = () => {
+    btnGuardar.disabled = false
+    btnGuardar.parentElement.style.display = ''
+    btnBuscar.disabled = false
+    btnBuscar.parentElement.style.display = ''
+    btnModificar.disabled = true
+    btnModificar.parentElement.style.display = 'none'
+    btnCancelar.disabled = true
+    btnCancelar.parentElement.style.display = 'none'
+    divTabla.style.display = ''
+}
+
+const eliminar = (id) =>{
+    alert('eliminando')
 }
 
 buscar();
 formulario.addEventListener('submit', guardar)
 btnBuscar.addEventListener('click', buscar)
+btnCancelar.addEventListener('click', cancelarAccion)
 
 
 
