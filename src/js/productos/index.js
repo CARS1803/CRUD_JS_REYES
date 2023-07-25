@@ -47,3 +47,7 @@ const guardar = async (evento) => {
 }
 
 formulario.addEventListener('submit', guardar)
+
+
+
+
