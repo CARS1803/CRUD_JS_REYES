@@ -21,14 +21,14 @@ const guardar = async (evento) => {
     evento.preventDefault();
 
     if (!validarFormulario(formulario,['cliente_id'])){
-        SVGViewElement.fire({
+        Swal.fire({
             title: 'Campos incompletos',
             text: 'Debe llenar todos los campos del formulario',
             icon: 'warning',
             showCancelButton: false,
             confirmCancelButtonColor: '#d33',
             confirmButtonText: 'OK',
-        })
+        });
 
         return;
     }
@@ -201,15 +201,12 @@ const cancelarAccion = () => {
 const modificar = async () => {
     const cliente_id = formulario.cliente_id.value;
 
-    if (validarFormulario(formulario, ['cliente_nombre'])) {
-        console.log('Campos incompletos. Debe llenar todos los campos del formulario.');
-        return;
-    }
+    
 
     const body = new FormData(formulario);
     body.append('tipo', 2);
     body.append('cliente_id', cliente_id);
-    body.delete('cliente_id')
+
 
     const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
     const config = {
@@ -242,6 +239,9 @@ const modificar = async () => {
         console.log(error);
     }
 };
+
+
+
 
 const eliminar = async (id) => {
     if (confirm('Desea eliminar este Cliente?')) {
