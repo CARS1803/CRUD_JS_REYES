@@ -1,5 +1,5 @@
 <?php include_once '../../includes/header.php'?>
-<?php include_once '../../includes/navbar.php'?>
+<?php include_once '../../includes/navbar.php'?> 
     <div class="container">
         <h1 class="text-center">Formulario de ingreso de clientes</h1>
         <div class="row justify-content-center">
@@ -51,6 +51,7 @@
                         </tbody>
                 </table>
             </div>
+        </div>
         </div>
     <script src="../../src/js/funciones.js"></script>
     <script src="../../src/js/clientes/index.js"></script>
