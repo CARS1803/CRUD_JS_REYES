@@ -200,7 +200,7 @@ const modificar = async () => {
     const cliente_id = formulario.cliente_id.value;
 
     if (validarFormulario(formulario, ['cliente_nombre'])) {
-        swal.fire({
+        Swal.fire({
             title: 'Campos incompletos',
             text: 'Debe llenar todos los campos del formulario',
             icon: 'warning',
@@ -219,7 +219,7 @@ const modificar = async () => {
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
-            body
+            body,
         };
 
         try {
@@ -231,13 +231,14 @@ const modificar = async () => {
             switch (codigo) {
                 case 1:
                     formulario.reset();
-                    buscar();
                     cancelarAccion();
+                    buscar();
+
 
                     swal.fire('Acualizado', mensaje, 'success');
                     break;
                 case 0:
-                    swal.fire('Error, verifique sus datos', mensaje, 'error');
+                    Swal.fire('Error, verifique sus datos', mensaje, 'error');
                     break;
 
                 default:
@@ -275,7 +276,7 @@ const eliminar = async (id) => {
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
-            body
+            body,
         };
     
         try {
@@ -283,7 +284,6 @@ const eliminar = async (id) => {
             const data = await respuesta.json();
 
             const { codigo, mensaje, detalle } = data;
-            alert(mensaje);
 
             switch (codigo) {
                 case 1:
@@ -295,7 +295,7 @@ const eliminar = async (id) => {
                 default:
                     break;
             }
-            swal.fire({
+            Swal.fire({
                 title:'Eliminado Exitosamente',
                 text: 'El cliente ha sido eliminado correctamente',
                 icon: 'success',
