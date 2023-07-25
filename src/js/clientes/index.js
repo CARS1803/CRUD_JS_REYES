@@ -2,9 +2,16 @@
 
 // !Este es mi codigo para clientes.
 
-const formulario = document.querySelector('form')
-const btnBuscar = document.getElementById('btnBuscar')
+const formulario = document.querySelector('form');
+const btnBuscar = document.getElementById('btnBuscar');
 const tablaClientes = document.getElementById('tablaClientes');
+const btnGuardar = document.getElementById('btnGuardar');
+const btnModificar = document.getElementById('btnModificar');
+const btnCancelar = document.getElementById('btnCancelar');
+const divTabla = document.getElementById('divTabla');
+
+btnModificar.disabled = true
+btnModificar.parentElement.style.display = 'none'
 
 const guardar = async (evento) => {
     evento.preventDefault();
@@ -134,6 +141,14 @@ const colocarDatos = (datos) => {
     formulario.cliente_nombre.value = datos.CLIENTE_NOMBRE
     formulario.cliente_nit.value = datos.CLIENTE_NIT
     formulario.cliente_id.value = datos.CLIENTE_ID
+
+    btnGuardar.disabled = true
+    btnGuardar.parentElement.style.display = 'none'
+    btnBuscar.disabled = true
+    btnBuscar.parentElement.style.display = 'none'
+    btnModificar.disabled = false
+    btnModificar.parentElement.style.display = ''
+    divTabla.style.display = 'none'
 
 
 }

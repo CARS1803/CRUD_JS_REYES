@@ -19,15 +19,24 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-primary w-100">Guardar</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" id="btnModificar" class="btn btn-warning w-100">Modificar</button>
                     </div>
                     <div class="col">
                         <button type="button" id="btnBuscar" class="btn btn-info w-100">Buscar</button>
                     </div>
+                    <!-- <div class="col">
+                        <button type="button" id="btnCancelar" class="btn btn-danger w-100">Cancelar</button>
+                    </div> -->
                 </div>
             </form>
         </div>
-        <table class="table table-bordered table-hover" id="tablaClientes">
+        <div class="row justify-content-center" id="divTabla">
+            <div class="col-lg-8">
+                <h2>Listado de Clientes</h2>
+                <table class="table table-bordered table-hover" id="tablaClientes">
                     <thead class="table-dark">
                         <tr>
                             <th>NO. </th>
@@ -37,11 +46,11 @@
                             <th>ELIMINAR</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
-                    </table>
-                    </div>
-    </div>
+                        <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
     <script src="../../src/js/funciones.js"></script>
     <script src="../../src/js/clientes/index.js"></script>
 <?php include_once '../../includes/footer.php'?>
