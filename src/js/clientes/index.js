@@ -9,7 +9,7 @@ const btnGuardar = document.getElementById('btnGuardar');
 const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const divTabla = document.getElementById('divTabla');
-const btnLimpiar = document.getElementById('btnLimpiar');
+
 
 btnModificar.disabled = true
 btnModificar.parentElement.style.display = 'none'

@@ -30,9 +30,7 @@
                     <div class="col-lg-2">
                         <button type="button" id="btnCancelar" class="btn btn-danger w-100">Cancelar</button>
                     </div>
-                    <div class="col-lg-2">
-                        <button type="button" id="btnLimpiar" class="btn btn-secondary w-100">Limpiar</button>
-                    </div>
+
                 </div>
             </form>
         </div>
