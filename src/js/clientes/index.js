@@ -215,19 +215,18 @@ const modificar = async () => {
         const body = new FormData(formulario);
         body.append('tipo', 2);
         body.append('clientes_id', cliente_id)
-        
+
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
-            body: formData,
+            body
         };
 
         try {
             const respuesta = await fetch(url, config);
             const data = await respuesta.json();
-
+            console.log(data);
             const { codigo, mensaje, detalle } = data;
-            alert(mensaje);
 
             switch (codigo) {
                 case 1:
@@ -235,21 +234,30 @@ const modificar = async () => {
                     buscar();
                     cancelarAccion();
 
+                    swal.fire('Acualizado', mensaje, 'success');
                     break;
                 case 0:
-                    console.log(detalle);
+                    swal.fire('Error, verifique sus datos', mensaje, 'error');
                     break;
+
                 default:
                     break;
             }
+            Swal.fire({
+                title: 'Modificacion exitosa',
+            text: 'Los datos se han modificado correctamente',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+            });
+
         } catch (error) {
             console.log(error);
         }
-    } else {
-        alert('Debe llenar todos los datos');
-        return;
-    }
-};
+    };
+
+    
 
 const eliminar = async (id) => {
     if (confirm('¿Está seguro que desea eliminarlo?')) {
