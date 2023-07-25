@@ -97,7 +97,7 @@ const buscar = async () => {
 
         //!Para crear tablas de forma automatica.
         const fragment=document.createDocumentFragment();
-
+        console.log(data);
         if(data.length > 0){
             let contador = 1;
             data.forEach(cliente => {
@@ -116,6 +116,7 @@ const buscar = async () => {
                 buttonEliminar.textContent = 'Eliminar';
 
                 buttonModificar.addEventListener('click', () =>  colocarDatos(cliente))
+                buttonEliminar.addEventListener('click', () =>  eliminar(cliente.CLIENTE_ID))
 
                 td1.innerText = contador;
                 td2.innerText = cliente.CLIENTE_NOMBRE
