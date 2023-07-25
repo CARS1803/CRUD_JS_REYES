@@ -195,90 +195,66 @@ const cancelarAccion = () => {
     divTabla.style.display = ''
 }
 
+// ...
+
 //!Aca esta la funcion de modificar un registro
 const modificar = async () => {
     const cliente_id = formulario.cliente_id.value;
 
     if (validarFormulario(formulario, ['cliente_nombre'])) {
-        Swal.fire({
-            title: 'Campos incompletos',
-            text: 'Debe llenar todos los campos del formulario',
-            icon: 'warning',
-            showCancelButton: false,
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'OK',
-        });
+        console.log('Campos incompletos. Debe llenar todos los campos del formulario.');
         return;
     }
 
+    const body = new FormData(formulario);
+    body.append('tipo', 2);
+    body.append('cliente_id', cliente_id);
+    body.delete('cliente_id')
 
-        const body = new FormData(formulario);
-        body.append('tipo', 2);
-        body.append('clientes_id', cliente_id)
-
-        const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
-        const config = {
-            method: 'POST',
-            body,
-        };
-
-        try {
-            const respuesta = await fetch(url, config);
-            const data = await respuesta.json();
-            console.log(data);
-            const { codigo, mensaje, detalle } = data;
-
-            switch (codigo) {
-                case 1:
-                    formulario.reset();
-                    cancelarAccion();
-                    buscar();
-
-
-                    swal.fire('Acualizado', mensaje, 'success');
-                    break;
-                case 0:
-                    Swal.fire('Error, verifique sus datos', mensaje, 'error');
-                    break;
-
-                default:
-                    break;
-            }
-            Swal.fire({
-                title: 'Modificacion exitosa',
-            text: 'Los datos se han modificado correctamente',
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK',
-            });
-
-        } catch (error) {
-            console.log(error);
-        }
+    const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
+    const config = {
+        method: 'POST',
+        body,
     };
 
+    try {
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+        console.log(data);
+        const { codigo, mensaje, detalle } = data;
 
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                cancelarAccion();
+                buscar();
+
+                console.log('Actualizado:', mensaje);
+                break;
+            case 0:
+                console.log('Error, verifique sus datos:', mensaje);
+                break;
+            default:
+                break;
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 const eliminar = async (id) => {
-    if(await Swal.fire({
-        title:'Desea eliminar este Cliente?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Si, eliminar',
-        cancelButtonText: 'Cancelar',
-    }).then((result) => result.isConfirmed)) {
+    if (confirm('Desea eliminar este Cliente?')) {
         const body = new FormData();
-        body.append('tipo',3);
+        body.append('tipo', 3);
         body.append('cliente_id', id);
+
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
             body,
         };
-    
+
         try {
             const respuesta = await fetch(url, config);
             const data = await respuesta.json();
@@ -288,6 +264,7 @@ const eliminar = async (id) => {
             switch (codigo) {
                 case 1:
                     buscar();
+                    console.log('Eliminado Exitosamente:', mensaje);
                     break;
                 case 0:
                     console.log(detalle);
@@ -295,23 +272,14 @@ const eliminar = async (id) => {
                 default:
                     break;
             }
-            Swal.fire({
-                title:'Eliminado Exitosamente',
-                text: 'El cliente ha sido eliminado correctamente',
-                icon: 'success',
-                showCancelButton: falce,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK',
-            })
 
         } catch (error) {
             console.log(error);
         }
     }
-
 };
 
-formulario.addEventListener('submit', guardar)
-btnBuscar.addEventListener('click', buscar)
-btnCancelar.addEventListener('click', cancelarAccion)
-btnModificar.addEventListener('click', modificar)
+formulario.addEventListener('submit', guardar);
+btnBuscar.addEventListener('click', buscar);
+btnCancelar.addEventListener('click', cancelarAccion);
+btnModificar.addEventListener('click', modificar);
