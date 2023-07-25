@@ -257,19 +257,27 @@ const modificar = async () => {
         }
     };
 
-    
+
 
 const eliminar = async (id) => {
-    if (confirm('¿Está seguro que desea eliminarlo?')) {
-        const formData = new FormData();
-        formData.append('tipo', 3);
-        formData.append('cliente_id', id);
+    if(await Swal.fire({
+        title:'Desea eliminar este Cliente?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => result.isConfirmed)) {
+        const body = new FormData();
+        body.append('tipo',3);
+        body.append('cliente_id', id);
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
-            body: formData,
+            body
         };
-
+    
         try {
             const respuesta = await fetch(url, config);
             const data = await respuesta.json();
@@ -287,14 +295,22 @@ const eliminar = async (id) => {
                 default:
                     break;
             }
+            swal.fire({
+                title:'Eliminado Exitosamente',
+                text: 'El cliente ha sido eliminado correctamente',
+                icon: 'success',
+                showCancelButton: falce,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+            })
+
         } catch (error) {
             console.log(error);
         }
     }
+
 };
 
-
-buscar();
 formulario.addEventListener('submit', guardar)
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)
