@@ -20,7 +20,14 @@ const guardar = async (evento) => {
     evento.preventDefault();
 
     if (!validarFormulario(formulario,['cliente_id'])){
-        alert('Debe llenar todos los campos');
+        Swal.fire({
+          title: 'Campos incompletos',
+          text: 'Debe llenar todos los campos del formulario.',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'OK',
+      });
         return;
     }
 
@@ -51,7 +58,14 @@ const guardar = async (evento) => {
 
             default:
                 break;
-        }
+        }Swal.fire({
+            title: 'Guardado exitoso',
+            text: 'Los datos se han guardado correctamente.',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          });
     } catch (error) {
         console.log(error);
     }
