@@ -15,7 +15,7 @@
                     </a>
                     <ul class="dropdown-menu bg-dark">
                         <li class="nav-item">
-                            <a class="nav-link" href="/crud_ajax/vistas/ventas/index.php">Ingresar venta</a>
+                            <a class="nav-link" href="#">Ingresar venta</a>
                         </li>
                         
                     </ul>
@@ -26,7 +26,7 @@
                     </a>
                     <ul class="dropdown-menu bg-dark">
                         <li class="nav-item">
-                            <a class="nav-link" href="/crud_ajax/vistas/clientes/index.php">ingresar cliente</a>
+                            <a class="nav-link" href="#">ingresar cliente</a>
                         </li>
                         
                     </ul>
@@ -37,7 +37,7 @@
                     </a>
                     <ul class="dropdown-menu bg-dark">
                         <li class="nav-item">
-                            <a class="nav-link" href="/crud_ajax/vistas/productos/index.php">Crear producto</a>
+                            <a class="nav-link" href="#">Crear producto</a>
                         </li>
                         
                     </ul>
