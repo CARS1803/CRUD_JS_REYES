@@ -1,7 +1,7 @@
 
 
 // !Este es mi codigo para clientes.
-
+// !mandamos a llamar todos los botones, formulario y del archivo de vistas
 const formulario = document.querySelector('form');
 const btnBuscar = document.getElementById('btnBuscar');
 const tablaClientes = document.getElementById('tablaClientes');
@@ -10,17 +10,26 @@ const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const divTabla = document.getElementById('divTabla');
 
-
+//!Esto es para ocultar el bootn de modificar, cancelar y la tabla
 btnModificar.disabled = true
 btnModificar.parentElement.style.display = 'none'
 btnCancelar.disabled = true
 btnCancelar.parentElement.style.display = 'none'
 
+//!Aca mandamos a llamar la funcion para validar que todos los campos esten llenos al momento de guardar.
 const guardar = async (evento) => {
     evento.preventDefault();
 
     if (!validarFormulario(formulario,['cliente_id'])){
-        alert('Debe llenar todos los campos');
+        SVGViewElement.fire({
+            title: 'Campos incompletos',
+            text: 'Debe llenar todos los campos del formulario',
+            icon: 'warning',
+            showCancelButton: false,
+            confirmCancelButtonColor: '#d33',
+            confirmButtonText: 'OK',
+        })
+
         return;
     }
 
@@ -52,6 +61,16 @@ const guardar = async (evento) => {
             default:
                 break;
         }
+
+        Swal.fire({
+            title:'Guardando Exitoso',
+            text: 'Los datos se han guardado correctamente',
+            icon: 'success',
+            showCancelButton: false,
+            confirmCancelButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+        });
+
     } catch (error) {
         console.log(error);
     }
@@ -66,7 +85,7 @@ const guardar = async (evento) => {
 
 
 
-
+//!Aca esta la funcion de Buscar.
 const buscar = async () => {
     let cliente_nombre = formulario.cliente_nombre.value;
     let cliente_nit = formulario.cliente_nit.value;
@@ -87,6 +106,8 @@ const buscar = async () => {
         if(data.length > 0){
             let contador = 1;
             data.forEach(cliente => {
+
+                //!Aca se crean los elementos
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td');
                 const td2 = document.createElement('td');
@@ -96,17 +117,22 @@ const buscar = async () => {
                 const buttonModificar = document.createElement('button');
                 const buttonEliminar = document.createElement('button');
 
+                //!Aca se agrega estilos usando Boostrap
                 buttonModificar.classList.add('btn', 'btn-warning');
                 buttonEliminar.classList.add('btn', 'btn-danger');
                 buttonModificar.textContent = 'Modificar';
                 buttonEliminar.textContent = 'Eliminar';
 
+                //!Aca se agrega interactividad a los botnes de modificar y eliminar.
                 buttonModificar.addEventListener('click', () =>  colocarDatos(cliente))
-
+                buttonEliminar.addEventListener('click', () => eliminar(cliente.CLIENTE_ID))
+                
                 td1.innerText = contador;
                 td2.innerText = cliente.CLIENTE_NOMBRE
                 td3.innerText = cliente.CLIENTE_NIT
                 
+
+                //!DOM
                 td4.appendChild(buttonModificar);
                 td5.appendChild(buttonEliminar);
                 tr.appendChild(td1)
@@ -134,10 +160,11 @@ const buscar = async () => {
     }catch (error){
         console.log(error)
     }
-}
+};
 
 
-
+//!Aca esta la funcion para que al pulsar el bonton de modificar
+//!se agregen los datos en automatico a el formulario.
 const colocarDatos = (datos) => {
     formulario.cliente_nombre.value = datos.CLIENTE_NOMBRE
     formulario.cliente_nit.value = datos.CLIENTE_NIT
@@ -152,10 +179,11 @@ const colocarDatos = (datos) => {
     btnCancelar.disabled = false
     btnCancelar.parentElement.style.display = ''
     divTabla.style.display = 'none'
+};
 
-}
 
-const cancelarAccion = (datos) => {
+//!Aca esta la funcino de cancelar la accion de modificar un registro.
+const cancelarAccion = () => {
     btnGuardar.disabled = false
     btnGuardar.parentElement.style.display = ''
     btnBuscar.disabled = false
@@ -167,12 +195,27 @@ const cancelarAccion = (datos) => {
     divTabla.style.display = ''
 }
 
-const modificar = async (e) => {
-    e.preventDefault();
+//!Aca esta la funcion de modificar un registro
+const modificar = async () => {
+    const cliente_id = formulario.cliente_id.value;
 
-    if (validarFormulario(formulario)) {
-        const formData = new FormData(formulario);
-        formData.append('tipo', 2);
+    if (validarFormulario(formulario, ['cliente_nombre'])) {
+        swal.fire({
+            title: 'Campos incompletos',
+            text: 'Debe llenar todos los campos del formulario',
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'OK',
+        });
+        return;
+    }
+
+
+        const body = new FormData(formulario);
+        body.append('tipo', 2);
+        body.append('clientes_id', cliente_id)
+        
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
