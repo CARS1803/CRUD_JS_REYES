@@ -201,12 +201,10 @@ const cancelarAccion = () => {
 const modificar = async () => {
     const cliente_id = formulario.cliente_id.value;
 
-    
 
     const body = new FormData(formulario);
     body.append('tipo', 2);
     body.append('cliente_id', cliente_id);
-
 
     const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
     const config = {
@@ -226,10 +224,20 @@ const modificar = async () => {
                 cancelarAccion();
                 buscar();
 
-                console.log('Actualizado:', mensaje);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Actualizado',
+                    text: mensaje,
+                    confirmButtonText: 'OK'
+                });
                 break;
             case 0:
-                console.log('Error, verifique sus datos:', mensaje);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Verifique sus datos: ' + mensaje,
+                    confirmButtonText: 'OK'
+                });
                 break;
             default:
                 break;
@@ -244,7 +252,16 @@ const modificar = async () => {
 
 
 const eliminar = async (id) => {
-    if (confirm('Desea eliminar este Cliente?')) {
+    const result = await Swal.fire({
+        icon: 'question',
+        title: 'Eliminar Cliente',
+        text: '¿Desea eliminar este Cliente?',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
         const body = new FormData();
         body.append('tipo', 3);
         body.append('cliente_id', id);
@@ -264,7 +281,12 @@ const eliminar = async (id) => {
             switch (codigo) {
                 case 1:
                     buscar();
-                    console.log('Eliminado Exitosamente:', mensaje);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Eliminado Exitosamente',
+                        text: mensaje,
+                        confirmButtonText: 'OK'
+                    });
                     break;
                 case 0:
                     console.log(detalle);
@@ -278,6 +300,7 @@ const eliminar = async (id) => {
         }
     }
 };
+
 
 formulario.addEventListener('submit', guardar);
 btnBuscar.addEventListener('click', buscar);
