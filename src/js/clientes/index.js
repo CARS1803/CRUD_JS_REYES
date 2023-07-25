@@ -182,16 +182,29 @@ const cancelarAccion = (datos) => {
     divTabla.style.display = ''
 }
 
-const modificar = async (e) => {
-    e.preventDefault();
+const modificar = async () => {
+    const cliente_id=formulario.cliente_id.value;
+    if (validarFormulario(formulario, ['cliente_nombre'])){
+        Swal.fire({
+          title: 'Campos incompletos',
+          text: 'Debe llenar todos los campos del formulario.',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'OK',
+        });
+        return;
+    }
 
-    if (validarFormulario(formulario)) {
-        const formData = new FormData(formulario);
-        formData.append('tipo', 2);
+
+
+        const body = new FormData(formulario);
+        body.append('tipo', 2);
+        body.append('cliente_id',cliente_id);
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
-            body: formData,
+            body
         };
 
         try {
@@ -206,22 +219,27 @@ const modificar = async (e) => {
                     formulario.reset();
                     buscar();
                     cancelarAccion();
-
+                    Swal.fire('Actualizado', mensaje, 'success');
                     break;
                 case 0:
-                    console.log(detalle);
+                    Swal.fire('Error, verifique sus datos', mensaje, 'error');
                     break;
                 default:
                     break;
             }
+            Swal.fire({
+                title: 'Modificación exitosa',
+                text: 'Los datos se han modificado correctamente.',
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+              })
         } catch (error) {
             console.log(error);
         }
-    } else {
-        alert('Debe llenar todos los datos');
-        return;
-    }
-};
+
+    } 
 
 const eliminar = async (id) => {
     if (confirm('¿Está seguro que desea eliminarlo?')) {
