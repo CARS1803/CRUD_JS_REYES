@@ -18,12 +18,12 @@ try {
             }
 
             if($tipo == 2){
-                $resultado = $cliente->guardar();
+                $resultado = $cliente->modificar();
                 $mensaje = "Se modifico correctamente";
             }
 
             if($tipo == 3){
-                $resultado = $cliente->guardar();
+                $resultado = $cliente->eliminar();
                 $mensaje = "Se elimino correctamente";
             }
 
