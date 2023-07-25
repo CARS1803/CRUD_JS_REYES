@@ -20,14 +20,7 @@ const guardar = async (evento) => {
     evento.preventDefault();
 
     if (!validarFormulario(formulario,['cliente_id'])){
-        Swal.fire({
-          title: 'Campos incompletos',
-          text: 'Debe llenar todos los campos del formulario.',
-          icon: 'warning',
-          showCancelButton: false,
-          confirmButtonColor: '#d33',
-          confirmButtonText: 'OK',
-      });
+        alert('Debe llenar todos los campos');
         return;
     }
 
@@ -58,14 +51,7 @@ const guardar = async (evento) => {
 
             default:
                 break;
-        }Swal.fire({
-            title: 'Guardado exitoso',
-            text: 'Los datos se han guardado correctamente.',
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK',
-          });
+        }
     } catch (error) {
         console.log(error);
     }
@@ -97,7 +83,7 @@ const buscar = async () => {
 
         //!Para crear tablas de forma automatica.
         const fragment=document.createDocumentFragment();
-        console.log(data);
+
         if(data.length > 0){
             let contador = 1;
             data.forEach(cliente => {
@@ -116,7 +102,6 @@ const buscar = async () => {
                 buttonEliminar.textContent = 'Eliminar';
 
                 buttonModificar.addEventListener('click', () =>  colocarDatos(cliente))
-                buttonEliminar.addEventListener('click', () =>  eliminar(cliente.CLIENTE_ID))
 
                 td1.innerText = contador;
                 td2.innerText = cliente.CLIENTE_NOMBRE
@@ -182,29 +167,16 @@ const cancelarAccion = (datos) => {
     divTabla.style.display = ''
 }
 
-const modificar = async () => {
-    const cliente_id=formulario.cliente_id.value;
-    if (validarFormulario(formulario, ['cliente_nombre'])){
-        Swal.fire({
-          title: 'Campos incompletos',
-          text: 'Debe llenar todos los campos del formulario.',
-          icon: 'warning',
-          showCancelButton: false,
-          confirmButtonColor: '#d33',
-          confirmButtonText: 'OK',
-        });
-        return;
-    }
+const modificar = async (e) => {
+    e.preventDefault();
 
-
-
-        const body = new FormData(formulario);
-        body.append('tipo', 2);
-        body.append('cliente_id',cliente_id);
+    if (validarFormulario(formulario)) {
+        const formData = new FormData(formulario);
+        formData.append('tipo', 2);
         const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
         const config = {
             method: 'POST',
-            body
+            body: formData,
         };
 
         try {
@@ -219,27 +191,22 @@ const modificar = async () => {
                     formulario.reset();
                     buscar();
                     cancelarAccion();
-                    Swal.fire('Actualizado', mensaje, 'success');
+
                     break;
                 case 0:
-                    Swal.fire('Error, verifique sus datos', mensaje, 'error');
+                    console.log(detalle);
                     break;
                 default:
                     break;
             }
-            Swal.fire({
-                title: 'Modificación exitosa',
-                text: 'Los datos se han modificado correctamente.',
-                icon: 'success',
-                showCancelButton: false,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK',
-              })
         } catch (error) {
             console.log(error);
         }
-
-    } 
+    } else {
+        alert('Debe llenar todos los datos');
+        return;
+    }
+};
 
 const eliminar = async (id) => {
     if (confirm('¿Está seguro que desea eliminarlo?')) {

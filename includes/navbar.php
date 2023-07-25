@@ -15,42 +15,34 @@
                     </a>
                     <ul class="dropdown-menu bg-dark">
                         <li class="nav-item">
-                            <a class="nav-link" href="/crud_practica9/vistas/ventas/index.php">Ingresar venta</a>
+                            <a class="nav-link" href="/crud_ajax/vistas/ventas/index.php">Ingresar venta</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/crud_practica9/vistas/ventas/buscar.php">Buscar venta</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/crud_practica9/controladores/ventas/detalle_ventas.php">Detalle de venta</a>
-                        </li>
+                        
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Productos
+                        cliente
                     </a>
                     <ul class="dropdown-menu bg-dark">
                         <li class="nav-item">
-                            <a class="nav-link" href="/crud_practica9/vistas/productos/index.php">Crear producto</a>
+                            <a class="nav-link" href="/crud_ajax/vistas/clientes/index.php">ingresar cliente</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/crud_practica9/vistas/productos/buscar.php">Buscar producto</a>
-                        </li>
+                        
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Clientes
+                        Productos
                     </a>
                     <ul class="dropdown-menu bg-dark">
                         <li class="nav-item">
-                            <a class="nav-link" href="/crud_practica9/vistas/clientes/index.php">Crear cliente</a>
+                            <a class="nav-link" href="/crud_ajax/vistas/productos/index.php">Crear producto</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/crud_practica9/vistas/clientes/buscar.php">Buscar cliente</a>
-                        </li>
+                        
                     </ul>
                 </li>
+
             </ul>
         </div>
     </div>
