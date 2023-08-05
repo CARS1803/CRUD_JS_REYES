@@ -11,6 +11,10 @@ btnModificar.parentElement.style.display = 'none'
 btnCancelar.disabled = true
 btnCancelar.parentElement.style.display = 'none'
 
+
+//!Funciones
+
+
 const guardar = async (evento) => {
     evento.preventDefault();
 
@@ -62,11 +66,11 @@ const guardar = async (evento) => {
 
 //!Evento para Guardar Informacion.
 
-
+//!funcion Buscar
 const buscar =  async () => {
     let producto_nombre = formulario.producto_nombre.value;
     let producto_precio = formulario.producto_precio.value;
-    const url =`/CRUD_JS/CRUD_JS_REYES/controladores/productos/index.php?producto_nombre=${producto_nombre}&producto_precio=${producto_precio}`;
+    const url =`/proyecto1/API/productos/buscar?producto_nombre=${producto_nombre}&producto_precio=${producto_precio}`;
     const config = {
         method : 'GET',
     }
@@ -76,6 +80,7 @@ const buscar =  async () => {
         const data = await respuesta.json();
 
         console.log(tablaProductos.tBodies[0].innerHTML = '');
+  
 
         //!Para crear tablas de forma automatica.
         const fragment=document.createDocumentFragment();
@@ -101,8 +106,8 @@ const buscar =  async () => {
                 buttonEliminar.addEventListener('click', () =>  eliminar(producto.PRODUCTO_ID))
 
                 td1.innerText = contador;
-                td2.innerText = producto.PRODUCTO_NOMBRE
-                td3.innerText = producto.PRODUCTO_PRECIO
+                td2.innerText = producto.producto_nombre
+                td3.innerText = producto.producto_precio
                 
                 td4.appendChild(buttonModificar);
                 td5.appendChild(buttonEliminar);
